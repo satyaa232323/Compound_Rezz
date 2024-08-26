@@ -1,5 +1,3 @@
-const { AlertOctagonIcon } = require("lucide-react");
-
 function formatNumberInput(element) {
     element.value = element.value.replace(/,/g, '');
     const value = parseFloat(element.value);
@@ -12,6 +10,7 @@ document.getElementById('saldoAwal').addEventListener('input', function () {
     formatNumberInput(this);
 });
 document.getElementById('sukuBunga').addEventListener('input', function () {
+
     formatFloatInput(this);
 });
 document.getElementById('waktu').addEventListener('input', function () {
