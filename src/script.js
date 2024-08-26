@@ -6,62 +6,97 @@ function formatNumberInput(element) {
     }
 }
 
-document.getElementById('saldoAwal').addEventListener('input', function() {
+document.getElementById('saldoAwal').addEventListener('input', function () {
     formatNumberInput(this);
 });
-document.getElementById('sukuBunga').addEventListener('input', function() {
-    formatNumberInput(this);
+document.getElementById('sukuBunga').addEventListener('input', function () {
+    formatFloatInput(this);
 });
-document.getElementById('waktu').addEventListener('input', function() {
+document.getElementById('waktu').addEventListener('input', function () {
     formatNumberInput(this);
 });
 
-function hitungSemuaBunga() {
+function hitungBunga() {
     // Ambil nilai dari input form
     const saldoAwal = parseFloat(document.getElementById('saldoAwal').value.replace(/,/g, ''));
     const sukuBunga = parseFloat(document.getElementById('sukuBunga').value.replace(/,/g, '')) / 100;
-    const waktu = parseFloat(document.getElementById('waktu').value.replace(/,/g, ''));
+    const waktu = parseInt(document.getElementById('waktu').value.replace(/,/g, ''));
+    const jenisBunga = document.getElementById('jenisBunga').value;
 
-    // Validasi input
-    if (isNaN(saldoAwal) || isNaN(sukuBunga) || isNaN(waktu)) {
-        alert("Harap masukkan nilai yang valid.");
-        return;
+    // Bersihkan hasil perhitungan sebelumnya
+    const hasilPerhitungan = document.getElementById('hasilPerhitungan');
+    hasilPerhitungan.innerHTML = '';
+
+    if (jenisBunga === 'tunggal') {
+        document.getElementById('headerTabel').innerText = 'Saldo Akhir';
+        document.getElementById('saldoTersisaHeader').style.display = 'none';
+        for (let bulan = 1; bulan <= waktu; bulan++) {
+            const bunga = saldoAwal * sukuBunga;
+            const saldoAkhir = saldoAwal + bunga;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
+                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
+                             <td class="border px-4 py-2">${saldoAkhir.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>`;
+            hasilPerhitungan.appendChild(row);
+        }
+    } else if (jenisBunga === 'majemuk') {
+        document.getElementById('headerTabel').innerText = 'Saldo Akhir';
+        document.getElementById('saldoTersisaHeader').style.display = 'none';
+        let saldo = saldoAwal;
+        for (let bulan = 1; bulan <= waktu; bulan++) {
+            const bunga = saldo * sukuBunga;
+            saldo += bunga;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
+                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
+                            <td class="border px-4 py-2">${saldo.toLocaleString('en-US'), { style: 'currency', currency: 'IDR' }}</td>`;
+            hasilPerhitungan.appendChild(row);
+        }
+    } 
+    else if (jenisBunga === 'anuitas') {
+        // Mengubah header tabel sesuai dengan jenis perhitungan
+        document.getElementById('headerTabel').innerText = 'Jumlah Angsuran';
+        document.getElementById('saldoTersisaHeader').style.display = '';
+    
+        let saldoTersisa = saldoAwal;
+    
+        // Menghitung jumlah angsuran anuitas tetap
+        const anuitas = saldoAwal * (sukuBunga / (1 - Math.pow(1 + sukuBunga, -waktu)));
+    
+        for (let bulan = 1; bulan <= waktu; bulan++) {
+            // Menghitung bunga untuk bulan ini
+            const bunga = saldoTersisa * sukuBunga;
+    
+            // Menghitung pokok yang dibayarkan bulan ini
+            const pokok = anuitas - bunga;
+    
+            // Mengurangi pokok dari saldo tersisa
+            saldoTersisa -= pokok;
+    
+            // Membuat baris baru untuk tabel hasil
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="border px-4 py-2">${bulan}</td>
+                <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
+                <td class="border px-4 py-2">${pokok.toLocaleString('en-US')}</td>
+                <td class="border px-4 py-2">${anuitas.toLocaleString('en-US')}</td>
+                <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+            `;
+    
+            // Menambahkan baris ke tabel hasil
+            hasilPerhitungan.appendChild(row);
+        }
     }
 
-    // Tabel Bunga Tunggal
-    const hasilBungaTunggal = document.getElementById('hasilBungaTunggal');
-    hasilBungaTunggal.innerHTML = ''; // Kosongkan hasil sebelumnya
-
-    for (let i = 1; i <= waktu; i++) {
-        const bunga = saldoAwal * sukuBunga * i;
-        const saldoAkhir = saldoAwal + bunga;
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td class="px-4 py-2 border">${i}</td>
-            <td class="px-4 py-2 border">Rp ${saldoAkhir.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</td>
-        `;
-        hasilBungaTunggal.appendChild(row);
-    }
-
-    // Tabel Bunga Majemuk
-    let saldoMajemuk = saldoAwal;
-    let hasilBungaMajemukHTML = '';
-    for (let i = 1; i <= waktu; i++) {
-        saldoMajemuk *= (1 + sukuBunga);
-        hasilBungaMajemukHTML += `<tr><td class="px-4 py-2 border">${i}</td><td class="px-4 py-2 border">${saldoMajemuk.toLocaleString('en-US')}</td></tr>`;
-    }
-    document.getElementById('hasilBungaMajemuk').innerHTML = hasilBungaMajemukHTML;
-
-    // Tabel Anuitas
-    let saldoAnuitas = saldoAwal;
-    const anuitasBulanan = saldoAwal * (sukuBunga * Math.pow(1 + sukuBunga, waktu)) / (Math.pow(1 + sukuBunga, waktu) - 1);
-    let hasilAnuitasHTML = '';
-    for (let i = 1; i <= waktu; i++) {
-        const pembayaranBunga = saldoAnuitas * sukuBunga;
-        const pembayaranPokok = anuitasBulanan - pembayaranBunga;
-        saldoAnuitas -= pembayaranPokok;
-        hasilAnuitasHTML += `<tr><td class="px-4 py-2 border">${i}</td><td class="px-4 py-2 border">${anuitasBulanan.toLocaleString('en-US')}</td><td class="px-4 py-2 border">${saldoAnuitas.toLocaleString('en-US')}</td></tr>`;
-    }
-    document.getElementById('hasilAnuitas').innerHTML = hasilAnuitasHTML;
 }
+
+
+// Mobile menu toggle
+const btn = document.querySelector('button.mobile-menu-button');
+const menu = document.querySelector('.mobile-menu');
+
+btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+});

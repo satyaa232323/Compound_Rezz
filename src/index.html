@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
 
+<body class="bg-gray-100">
     <!-- Navbar -->
-    <nav class="bg-white shadow-lg ">
+    <nav class="bg-white shadow-lg">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between">
                 <div class="flex space-x-4">
                     <!-- Logo -->
                     <div>
                         <a href="#" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
-                            <svg class="h-6 w-6 mr-1 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4 9 5.567 9 7.5s1.343 3.5 3 3.5zm0 0v2m0 0v2m-3 1h6m-6 0v4m6-4v4m-6 0H6a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2h-3"/>
+                            <svg class="h-6 w-6 mr-1 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4 9 5.567 9 7.5s1.343 3.5 3 3.5zm0 0v2m0 0v2m-3 1h6m-6 0v4m6-4v4m-6 0H6a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2h-3" />
                             </svg>
                             <span class="font-bold">Check ID</span>
                         </a>
@@ -34,7 +37,8 @@
                 <!-- Mobile Button -->
                 <div class="md:hidden flex items-center">
                     <button class="mobile-menu-button">
-                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M4 6h16M4 12h16m-7 6h7"></path>
                         </svg>
                     </button>
@@ -45,33 +49,11 @@
         <!-- Mobile Menu -->
         <div class="mobile-menu hidden md:hidden">
             <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Home</a>
-            <a href="#cekpinjaman" class="block py-2 px-4 text-sm hover:bg-gray-200" >Cek Bunga Tunggal</a>
+            <a href="#cekpinjaman" class="block py-2 px-4 text-sm hover:bg-gray-200">Cek Bunga Tunggal</a>
             <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Services</a>
             <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Contact</a>
         </div>
     </nav>
-
-    <!-- Carousel -->
-    <div class="relative w-full max-w-6xl mx-auto overflow-hidden mt-8">
-        <!-- Slides -->
-        <div class="flex transition-transform duration-500 ease-out" id="carousel">
-            <div class="min-w-full">
-                <img src="img/img-1.jpg" class="w-full h-64 object-cover" alt="Slide 1">
-            </div>
-            <div class="min-w-full">
-                <img src="img/img-2.jpg" class="w-full h-64 object-cover" alt="Slide 2">
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2" id="prev">
-            Prev
-        </button>
-        <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2" id="next">
-            Next
-        </button>
-    </div>
-
 
     <!-- Hero Section -->
     <section class="bg-blue-500 text-white py-60 px-50 mt-8">
@@ -82,7 +64,6 @@
         </div>
     </section>
 
-    
     <!-- Content -->
     <section class="min-h-screen m-7 " id="cekpinjaman">
         <div class="max-w-4xl mx-auto md:max-w-2xl">
@@ -93,73 +74,59 @@
                     <form id="loanForm">
                         <div class="mb-4">
                             <label for="saldoAwal" class="block text-gray-700 font-medium mb-2">Saldo Awal</label>
-                            <input type="text" id="saldoAwal" name="saldoAwal" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan saldo awal">
+                            <input type="text" id="saldoAwal" name="saldoAwal"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Masukkan saldo awal">
                         </div>
                         <div class="mb-4">
                             <label for="sukuBunga" class="block text-gray-700 font-medium mb-2">Bunga Perbulan (%)</label>
-                            <input type="text" id="sukuBunga" name="sukuBunga" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan suku bunga">
+                            <input type="text" id="sukuBunga" name="sukuBunga"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Masukkan suku bunga">
                         </div>
                         <div class="mb-4">
                             <label for="waktu" class="block text-gray-700 font-medium mb-2">Waktu (bulan)</label>
-                            <input type="text" id="waktu" name="waktu" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan jangka waktu">
+                            <input type="text" id="waktu" name="waktu"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Masukkan jangka waktu">
                         </div>
-                        <button type="button" onclick="hitungSemuaBunga()" class="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">Cek</button>
+                        <div class="mb-4">
+                            <label for="jenisBunga" class="block text-gray-700 font-medium mb-2">Pilih Jenis
+                                Perhitungan</label>
+                            <select id="jenisBunga" name="jenisBunga"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="tunggal">Bunga Tunggal</option>
+                                <option value="majemuk">Bunga Majemuk</option>
+                                <option value="anuitas">Anuitas</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="hitungBunga()"
+                            class="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">Cek</button>
                     </form>
                 </div>
-       <!-- Hasil Perhitungan -->
-      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl my-2">
-        <h2 class="text-black text-2xl font-bold mb-4">Hasil Perhitungan</h2>
-        <h3 class="text-lg font-semibold">Bunga Tunggal</h3>
+                <!-- Hasil Perhitungan -->
+                <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl my-2">
+                    <h2 class="text-black text-2xl font-bold mb-4">Hasil Perhitungan</h2>
+                    <table id="tabelHasil" class="min-w-full table-auto text-left mt-4">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 border">Bulan</th>
+                                <th class="px-4 py-2 border">Bunga</th>
+                                <th id="headerTabel" class="px-4 py-2 border">Jumlah Angsuran</th>
+                                <th class="px-4 py-2 border" id="saldoTersisaHeader">Saldo Tersisa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hasilPerhitungan"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        
-        <table id="tabelBungaMajemuk" class="min-w-full table-auto text-left mt-4">
-            <thead>
-                    <tr>
-                    <th class="px-4 py-2 border">Bulan</th>
-                    <th class="px-4 py-2 border">Saldo Akhir</th>
-                </tr>
-            </thead>
-            <tbody id="hasilBungaTunggal"></tbody>
-        </table>
-
-
-
-
-        <h3 class="text-lg font-semibold">Bunga Majemuk:</h3>
-    
-
-
-        <table id="tabelBungaMajemuk" class="min-w-full table-auto text-left mt-4">
-            <thead>
-                    <tr>
-                    <th class="px-4 py-2 border">Bulan</th>
-                    <th class="px-4 py-2 border">Saldo Akhir</th>
-                </tr>
-            </thead>
-            <tbody id="hasilBungaMajemuk"></tbody>
-        </table>
-
-        <h3 class="text-lg font-semibold mt-8">Anuitas:</h3>
-        <table id="tabelAnuitas" class="min-w-full table-auto text-left mt-4">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 border">Bulan</th>
-                    <th class="px-4 py-2 border">Pembayaran</th>
-                    <th class="px-4 py-2 border">Saldo Tersisa</th>
-                </tr>
-            </thead>
-            <tbody id="hasilAnuitas"></tbody>
-        </table>
-    </div>
-</div>
-</div>
-</section>
-
-<!-- Script untuk menghitung bunga -->
-<script src="script.js">
-// Format number input to include commas
-
-</script>
-    
+    <!-- Script untuk menghitung bunga -->
+    <script src="script.js">
+      
+    </script>
 </body>
+
 </html>
