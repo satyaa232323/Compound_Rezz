@@ -1,3 +1,5 @@
+const { AlertOctagonIcon } = require("lucide-react");
+
 function formatNumberInput(element) {
     element.value = element.value.replace(/,/g, '');
     const value = parseFloat(element.value);
@@ -90,8 +92,12 @@ function hitungBunga() {
             hasilPerhitungan.appendChild(row);
         }
     }
+    else{
+        AlertOctagonIcon('Error!, masukan angka dengan benar');
+    }
 
 }
+
 
 
 // Mobile menu toggle
