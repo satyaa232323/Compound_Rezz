@@ -104,20 +104,24 @@
                             class="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">Cek</button>
                     </form>
                 </div>
+                
                 <!-- Hasil Perhitungan -->
                 <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl my-2">
                     <h2 class="text-black text-2xl font-bold mb-4">Hasil Perhitungan</h2>
-                    <table id="tabelHasil" class="min-w-full table-auto text-left mt-4">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2 border">Bulan</th>
-                                <th class="px-4 py-2 border">Bunga</th>
-                                <th id="headerTabel" class="px-4 py-2 border">Jumlah Angsuran</th>
-                                <th class="px-4 py-2 border" id="saldoTersisaHeader">Saldo Tersisa</th>
-                            </tr>
-                        </thead>
-                        <tbody id="hasilPerhitungan"></tbody>
-                    </table>
+                    <div class="overflow-x-auto">
+                        <table id="tabelHasil" class="max-w-screen-2xl table-auto text-left mx-auto md:max-w-md">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 border">Bulan</th>
+                                    <th class="px-4 py-2 border">Bunga</th>
+                                    <th class="px-4 py-2 border hidden" id="BungaPokok">BungaPokok</th>
+                                    <th id="headerTabel" class="px-2 py-2 border">Jumlah Angsuran</th>
+                                    <th class="px-4 py-2 border" id="saldoTersisaHeader">Saldo Tersisa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hasilPerhitungan"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

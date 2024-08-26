@@ -51,13 +51,14 @@ function hitungBunga() {
             const row = document.createElement('tr');
             row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
                              <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
-                            <td class="border px-4 py-2">${saldo.toLocaleString('en-US'), { style: 'currency', currency: 'IDR' }}</td>`;
+                            <td class="border px-4 py-2">${saldo.toLocaleString('en-US')}</td>`;
             hasilPerhitungan.appendChild(row);
         }
     } 
     else if (jenisBunga === 'anuitas') {
         // Mengubah header tabel sesuai dengan jenis perhitungan
         document.getElementById('headerTabel').innerText = 'Jumlah Angsuran';
+        document.getElementById('BungaPokok').style.display = 'table-cell';
         document.getElementById('saldoTersisaHeader').style.display = '';
     
         let saldoTersisa = saldoAwal;
@@ -82,7 +83,7 @@ function hitungBunga() {
                 <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
                 <td class="border px-4 py-2">${pokok.toLocaleString('en-US')}</td>
                 <td class="border px-4 py-2">${anuitas.toLocaleString('en-US')}</td>
-                <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US')}</td>
             `;
     
             // Menambahkan baris ke tabel hasil
