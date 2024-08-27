@@ -18,6 +18,12 @@ document.getElementById('waktu').addEventListener('input', function () {
 });
 
 function hitungBunga() {
+
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.innerText = '';
+
+    // error handling
+
     // Ambil nilai dari input form
     const saldoAwal = parseFloat(document.getElementById('saldoAwal').value.replace(/,/g, ''));
     const sukuBunga = parseFloat(document.getElementById('sukuBunga').value.replace(/,/g, '')) / 100;
@@ -37,11 +43,12 @@ function hitungBunga() {
 
             const row = document.createElement('tr');
             row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
-                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
+                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
                              <td class="border px-4 py-2">${saldoAkhir.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>`;
             hasilPerhitungan.appendChild(row);
         }
-    } else if (jenisBunga === 'majemuk') {
+    } 
+    else if (jenisBunga === 'majemuk') {
         document.getElementById('headerTabel').innerText = 'Saldo Akhir';
         document.getElementById('saldoTersisaHeader').style.display = 'none';
         let saldo = saldoAwal;
@@ -51,49 +58,50 @@ function hitungBunga() {
 
             const row = document.createElement('tr');
             row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
-                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
-                            <td class="border px-4 py-2">${saldo.toLocaleString('en-US')}</td>`;
+                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                            <td class="border px-4 py-2">${saldo.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>`;
             hasilPerhitungan.appendChild(row);
         }
     } 
-    else if (jenisBunga === 'anuitas') {
-        // Mengubah header tabel sesuai dengan jenis perhitungan
+     // Annuity calculation logic
+     else if (jenisBunga === 'anuitas') {
+        // Set table headers
         document.getElementById('headerTabel').innerText = 'Jumlah Angsuran';
         document.getElementById('BungaPokok').style.display = 'table-cell';
         document.getElementById('saldoTersisaHeader').style.display = '';
-    
-        let saldoTersisa = saldoAwal;
-    
-        // Menghitung jumlah angsuran anuitas tetap
+
+        
+        // Monthly annuity payment calculation
         const anuitas = saldoAwal * (sukuBunga / (1 - Math.pow(1 + sukuBunga, -waktu)));
-    
+        
+        let saldoTersisa = saldoAwal;
+
         for (let bulan = 1; bulan <= waktu; bulan++) {
-            // Menghitung bunga untuk bulan ini
+            // Calculate interest for this month
             const bunga = saldoTersisa * sukuBunga;
-    
-            // Menghitung pokok yang dibayarkan bulan ini
-            const pokok = anuitas - bunga;
-    
-            // Mengurangi pokok dari saldo tersisa
-            saldoTersisa -= pokok;
-    
-            // Membuat baris baru untuk tabel hasil
+
+            // Calculate principal payment for this month
+            const angsuranPokok = anuitas - bunga;
+
+            // Deduct principal payment from remaining balance
+            saldoTersisa -= angsuranPokok;
+
+            // Create a new row for the result table
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="border px-4 py-2">${bulan}</td>
-                <td class="border px-4 py-2">${bunga.toLocaleString('en-US')}</td>
-                <td class="border px-4 py-2">${pokok.toLocaleString('en-US')}</td>
-                <td class="border px-4 py-2">${anuitas.toLocaleString('en-US')}</td>
-                <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US')}</td>
+                <td class="border px-4 py-2">${angsuranPokok.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${bunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${anuitas.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
             `;
-    
-            // Menambahkan baris ke tabel hasil
+
+            // Append the row to the result table
             hasilPerhitungan.appendChild(row);
         }
+  
     }
-    else{
-        AlertOctagonIcon('Error!, masukan angka dengan benar');
-    }
+   
 
 }
 
