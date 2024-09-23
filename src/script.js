@@ -34,27 +34,38 @@ function hitungBunga() {
     const hasilPerhitungan = document.getElementById('hasilPerhitungan');
     hasilPerhitungan.innerHTML = '';
 
-    if (jenisBunga === 'tunggal') {
+     if (jenisBunga === 'tunggal') {
+        // Set header tabel
         document.getElementById('headerTabel').innerText = 'Saldo Akhir';
         document.getElementById('saldoTersisaHeader').style.display = 'none';
+    
+        // Menghitung saldo akhir dengan bunga tunggal
+        const bungaTunggal = saldoAwal * sukuBunga * waktu; // Menghitung total bunga selama periode waktu
+        const saldoAkhir = saldoAwal + bungaTunggal; // Menghitung saldo akhir setelah bunga
+    
         for (let bulan = 1; bulan <= waktu; bulan++) {
-            const bunga = saldoAwal * sukuBunga;
-            const saldoAkhir = saldoAwal + bunga;
-
+            // Menghitung bunga setiap bulan (tidak bertambah karena tunggal)
+            const bunga = saldoAwal * sukuBunga; // Bunga tetap setiap bulan
+    
+            // Membuat baris baru untuk setiap bulan
             const row = document.createElement('tr');
-            row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
-                             <td class="border px-4 py-2">${bunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
-                             <td class="border px-4 py-2">${saldoAkhir.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>`;
+            row.innerHTML = `
+                <td class="border px-4 py-2">${bulan}</td>
+                <td class="border px-4 py-2">${bunga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${(saldoAwal + (bunga * bulan)).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+            `;
+    
+            // Menambahkan baris ke tabel hasil
             hasilPerhitungan.appendChild(row);
         }
-    } 
+    }
     else if (jenisBunga === 'majemuk') {
         document.getElementById('headerTabel').innerText = 'Saldo Akhir';
         document.getElementById('saldoTersisaHeader').style.display = 'none';
         let saldo = saldoAwal;
         for (let bulan = 1; bulan <= waktu; bulan++) {
             const bunga = saldo * sukuBunga;
-            saldo += bunga;
+          sisaSaldo =  saldo += bunga;
 
             const row = document.createElement('tr');
             row.innerHTML = `<td class="border px-4 py-2">${bulan}</td>
@@ -69,38 +80,59 @@ function hitungBunga() {
         document.getElementById('headerTabel').innerText = 'Jumlah Angsuran';
         document.getElementById('BungaPokok').style.display = 'table-cell';
         document.getElementById('saldoTersisaHeader').style.display = '';
-
-        Bunga = sukuBunga / 12;
-        // Monthly annuity payment calculation
-        const anuitas = saldoAwal * (Bunga / (1 - Math.pow(1 + Bunga, -waktu)));
-        
+    
+        // Ubah suku bunga ke bunga bulanan
+        const bungaBulanan = sukuBunga ;
+        // Hitung jumlah angsuran bulanan (anuitas)
+        const anuitas = saldoAwal * (bungaBulanan / (1 - Math.pow(1 + bungaBulanan, -waktu)));
         let saldoTersisa = saldoAwal;
-
+        let totalPokokDibayar = 0; // Variabel untuk melacak total pokok yang dibayar
+    
         for (let bulan = 1; bulan <= waktu; bulan++) {
-            // Calculate interest for this month
-            const SisaBunga = saldoTersisa * Bunga;
-
-            // Calculate principal payment for this month
-            const angsuranPokok = anuitas - SisaBunga;
-
-            // Deduct principal payment from remaining balance
+            // Hitung bunga bulan ini berdasarkan saldo tersisa
+            const bungaBulanIni = saldoTersisa * bungaBulanan;
+    
+            // Hitung angsuran pokok bulan ini
+            const angsuranPokok = anuitas - bungaBulanIni;
+    
+            // Kurangi angsuran pokok dari saldo tersisa
             saldoTersisa -= angsuranPokok;
-
-            // Create a new row for the result table
+    
+            // Akumulasi total pokok yang dibayar
+            totalPokokDibayar += angsuranPokok;
+    
+            // Membuat baris baru untuk tabel hasil
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td class="border px-4 py-2">${bulan}</td>
                 <td class="border px-4 py-2">${angsuranPokok.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
-                <td class="border px-4 py-2">${SisaBunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${bungaBulanIni.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
                 <td class="border px-4 py-2">${anuitas.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
                 <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
             `;
-
-            // Append the row to the result table
+    
+            // Menambahkan baris ke tabel hasil
             hasilPerhitungan.appendChild(row);
         }
-  
+    
+        // Tampilkan total pokok yang dibayar di bagian bawah untuk validasi
+        const totalRow = document.createElement('tr');
+        totalRow.innerHTML = `
+            <td class="border px-4 py-2 font-bold" colspan="3">Total Pokok Dibayar</td>
+            <td class="border px-4 py-2 font-bold">${totalPokokDibayar.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+            <td class="border px-4 py-2"></td>
+        `;
+        hasilPerhitungan.appendChild(totalRow);
+    
+        // Validasi: Pastikan total pokok yang dibayar sama dengan saldo awal
+        if (Math.abs(totalPokokDibayar - saldoAwal) > 0.01) {
+            console.error('Total pokok yang dibayar tidak sesuai dengan saldo awal.');
+        }
     }
+    
+    
+    
+    
    
 
 }
