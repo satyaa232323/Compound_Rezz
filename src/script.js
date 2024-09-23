@@ -70,18 +70,18 @@ function hitungBunga() {
         document.getElementById('BungaPokok').style.display = 'table-cell';
         document.getElementById('saldoTersisaHeader').style.display = '';
 
-        
+        Bunga = sukuBunga / 12;
         // Monthly annuity payment calculation
-        const anuitas = saldoAwal * (sukuBunga / (1 - Math.pow(1 + sukuBunga, -waktu)));
+        const anuitas = saldoAwal * (Bunga / (1 - Math.pow(1 + Bunga, -waktu)));
         
         let saldoTersisa = saldoAwal;
 
         for (let bulan = 1; bulan <= waktu; bulan++) {
             // Calculate interest for this month
-            const bunga = saldoTersisa * sukuBunga;
+            const SisaBunga = saldoTersisa * Bunga;
 
             // Calculate principal payment for this month
-            const angsuranPokok = anuitas - bunga;
+            const angsuranPokok = anuitas - SisaBunga;
 
             // Deduct principal payment from remaining balance
             saldoTersisa -= angsuranPokok;
@@ -91,7 +91,7 @@ function hitungBunga() {
             row.innerHTML = `
                 <td class="border px-4 py-2">${bulan}</td>
                 <td class="border px-4 py-2">${angsuranPokok.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
-                <td class="border px-4 py-2">${bunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
+                <td class="border px-4 py-2">${SisaBunga.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
                 <td class="border px-4 py-2">${anuitas.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
                 <td class="border px-4 py-2">${saldoTersisa.toLocaleString('en-US', { style: 'currency', currency: 'IDR' })}</td>
             `;
@@ -109,7 +109,7 @@ function hitungBunga() {
 
 // Mobile menu toggle
 const btn = document.querySelector('button.mobile-menu-button');
-const menu = document.querySelector('.mobile-menu');
+const menu = document.querySelector('.mobile-me=nu');
 
 btn.addEventListener('click', () => {
     menu.classList.toggle('hidden');
